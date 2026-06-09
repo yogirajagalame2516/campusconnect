@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Track Complaint</title>
+
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        font-family:Arial,sans-serif;
+        background:#eef2f7;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:30px;
+    }
+
+    .card{
+        width:100%;
+        max-width:750px;
+        background:white;
+        padding:40px;
+        border-radius:18px;
+        box-shadow:0 12px 35px rgba(0,0,0,0.08);
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:10px;
+        color:#111827;
+    }
+
+    .subtitle{
+        text-align:center;
+        color:#6b7280;
+        margin-bottom:30px;
+    }
+
+    input{
+        width:100%;
+        padding:14px;
+        border:1px solid #cbd5e1;
+        border-radius:10px;
+        font-size:15px;
+        margin-bottom:15px;
+    }
+
+    input:focus{
+        outline:none;
+        border-color:#2563eb;
+        box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    button{
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:10px;
+        background:#2563eb;
+        color:white;
+        font-size:15px;
+        font-weight:600;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#1d4ed8;
+    }
+
+    .result{
+        margin-top:25px;
+        background:#f8fafc;
+        border:1px solid #e5e7eb;
+        border-radius:12px;
+        padding:20px;
+    }
+
+    .row{
+        margin-bottom:14px;
+    }
+
+    .label{
+        font-weight:600;
+        color:#374151;
+    }
+
+    .status{
+        display:inline-block;
+        padding:5px 10px;
+        border-radius:20px;
+        background:#fef3c7;
+        color:#92400e;
+        font-size:13px;
+        font-weight:600;
+    }
+
+    .priority{
+        display:inline-block;
+        padding:5px 10px;
+        border-radius:20px;
+        background:#dbeafe;
+        color:#1d4ed8;
+        font-size:13px;
+        font-weight:600;
+    }
+
+    .admin-note{
+        background:#eff6ff;
+        border-left:4px solid #2563eb;
+        padding:12px;
+        margin-top:10px;
+        border-radius:8px;
+    }
+
+    .error{
+        margin-top:20px;
+        padding:12px;
+        background:#fef2f2;
+        color:#dc2626;
+        border-radius:8px;
+    }
+
+    .back{
+        display:block;
+        text-align:center;
+        margin-top:20px;
+        text-decoration:none;
+        color:#2563eb;
+        font-size:14px;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="card">
+
+
+<h1>Track Complaint</h1>
+
+<p class="subtitle">
+    Enter your Complaint ID to check the latest status
+</p>
+
+<form action="/track" method="post">
+
+    <input
+        type="text"
+        name="complaintId"
+        placeholder="Example: CC-1001"
+        required>
+
+    <button type="submit">
+        Track Complaint
+    </button>
+
+</form>
+
+<div class="error" th:if="${error != null}">
+    <span th:text="${error}"></span>
+</div>
+
+<div class="result" th:if="${complaint != null}">
+
+    <div class="row">
+        <span class="label">Complaint ID:</span>
+        <span th:text="${complaint.complaintId}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Student Name:</span>
+        <span th:text="${complaint.name}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Category:</span>
+        <span th:text="${complaint.category}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Date Submitted:</span>
+        <span th:text="${complaint.createdDate}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Priority:</span>
+        <span class="priority" th:text="${complaint.priority}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Status:</span>
+        <span class="status" th:text="${complaint.status}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Complaint:</span>
+        <span th:text="${complaint.message}"></span>
+    </div>
+
+    <div class="row">
+        <span class="label">Admin Note:</span>
+
+        <div class="admin-note">
+            <span th:text="${complaint.adminNote}"></span>
+        </div>
+    </div>
+
+</div>
+
+<a href="/" class="back">
+    Back to Main Page
+</a>
+
+
+</div>
+
+</body>
+</html>

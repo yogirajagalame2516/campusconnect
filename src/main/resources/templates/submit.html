@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Submit Complaint</title>
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+
+        body{
+            font-family:Arial,sans-serif;
+            background:#eef2f7;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .card{
+            width:100%;
+            max-width:620px;
+            background:white;
+            padding:40px;
+            border-radius:18px;
+            box-shadow:0 12px 35px rgba(0,0,0,0.08);
+        }
+
+        .top-bar{
+    margin-bottom:12px;
+}
+
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 14px;
+    background:#f8fafc;
+    border:1px solid #dbe3ee;
+    border-radius:10px;
+    text-decoration:none;
+    color:#374151;
+    font-size:14px;
+    font-weight:600;
+    transition:0.2s;
+}
+
+.back-btn:hover{
+    background:#eef2f7;
+}
+
+        h1{text-align:center;color:#111827;margin-bottom:8px;}
+
+        .subtitle{
+            text-align:center;
+            color:#6b7280;
+            margin-bottom:28px;
+        }
+
+        label{
+            display:block;
+            font-weight:600;
+            margin-bottom:8px;
+            color:#374151;
+        }
+
+        input,select,textarea{
+            width:100%;
+            padding:13px;
+            border:1px solid #cbd5e1;
+            border-radius:10px;
+            font-size:15px;
+            margin-bottom:18px;
+        }
+
+        input:focus,select:focus,textarea:focus{
+            outline:none;
+            border-color:#2563eb;
+            box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+        }
+
+        textarea{resize:none;}
+
+        button{
+            width:100%;
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:14px;
+            border-radius:10px;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        }
+
+        button:hover{background:#1d4ed8;}
+
+        .back{
+    display:block;
+    text-align:center;
+    margin-top:16px;
+    color:#2563eb;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+}
+
+.back:hover{
+    text-decoration:underline;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="top-bar">
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
+</div>
+
+<h1>Submit Complaint</h1>
+<p class="subtitle">Fill the details below to raise a campus complaint</p>
+
+    <form action="/submit" method="post" th:object="${complaint}">
+
+        <label>Name</label>
+        <input type="text" placeholder="Enter your name" th:field="*{name}" required>
+
+        <label>Email</label>
+        <input type="email" placeholder="Enter your email" th:field="*{email}" required>
+
+        <label>Category</label>
+        <select th:field="*{category}" required>
+            <option value="Academic">Academic</option>
+            <option value="Examination">Examination</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Fee & Scholarship">Fee & Scholarship</option>
+            <option value="Infrastructure">Infrastructure</option>
+            <option value="Library">Library</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Complaint</label>
+        <textarea rows="5" placeholder="Describe your issue" th:field="*{message}" required></textarea>
+
+        <button type="submit">Submit Complaint</button>
+    </form>
+
+    <a href="/list" class="back">
+    View Previous Complaints
+</a>
+
+</div>
+
+</body>
+</html>

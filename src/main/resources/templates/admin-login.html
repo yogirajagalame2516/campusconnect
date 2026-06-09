@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin Login</title>
+
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        font-family:Arial,sans-serif;
+        background:#eef2f7;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:30px;
+    }
+
+    .card{
+        background:white;
+        width:100%;
+        max-width:450px;
+        padding:40px;
+        border-radius:20px;
+        box-shadow:0 12px 35px rgba(0,0,0,0.08);
+    }
+
+    .icon{
+        text-align:center;
+        font-size:56px;
+        margin-bottom:10px;
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:8px;
+        color:#111827;
+    }
+
+    .subtitle{
+        text-align:center;
+        color:#6b7280;
+        margin-bottom:28px;
+        font-size:14px;
+    }
+
+    label{
+        display:block;
+        font-weight:600;
+        margin-bottom:8px;
+        color:#374151;
+    }
+
+    input{
+        width:100%;
+        padding:13px;
+        border:1px solid #cbd5e1;
+        border-radius:10px;
+        font-size:15px;
+        margin-bottom:12px;
+    }
+
+    input:focus{
+        outline:none;
+        border-color:#2563eb;
+        box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    .hint{
+        background:#f8fafc;
+        border:1px solid #e5e7eb;
+        padding:12px;
+        border-radius:10px;
+        color:#64748b;
+        font-size:14px;
+        margin-bottom:18px;
+    }
+
+    button{
+        width:100%;
+        background:#2563eb;
+        color:white;
+        border:none;
+        padding:14px;
+        border-radius:10px;
+        font-size:16px;
+        font-weight:600;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#1d4ed8;
+    }
+
+    .error{
+        background:#fef2f2;
+        color:#dc2626;
+        padding:10px;
+        border-radius:8px;
+        margin-bottom:14px;
+        text-align:center;
+        font-size:14px;
+    }
+
+    .back{
+        display:block;
+        text-align:center;
+        margin-top:18px;
+        color:#2563eb;
+        text-decoration:none;
+        font-size:14px;
+    }
+
+    .back:hover{
+        text-decoration:underline;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+
+<div class="icon">🛡️</div>
+
+<h1>Admin Login</h1>
+
+<p class="subtitle">
+    Access the CampusConnect administration dashboard
+</p>
+
+<div class="error" th:if="${error != null}">
+    <span th:text="${error}"></span>
+</div>
+
+<form action="/admin-login" method="post">
+
+    <label>Password</label>
+
+    <input
+        type="password"
+        name="password"
+        placeholder="Enter admin password"
+        required>
+
+    <div class="hint">
+        Password Hint: admin123
+    </div>
+
+    <button type="submit">
+        Login
+    </button>
+
+</form>
+
+<a href="/" class="back">
+    Back to Home
+</a>
+
+</div>
+
+</body>
+</html>

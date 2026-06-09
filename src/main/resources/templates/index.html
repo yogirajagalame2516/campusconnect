@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CampusConnect</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:Arial,sans-serif;
+            background:#eef2f7;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .container{
+            width:100%;
+            max-width:1100px;
+        }
+
+        .hero{
+            background:white;
+            border-radius:20px;
+            padding:50px;
+            text-align:center;
+            box-shadow:0 12px 35px rgba(0,0,0,0.08);
+        }
+
+        .hero h1{
+            font-size:40px;
+            color:#111827;
+            margin-bottom:12px;
+        }
+
+        .hero p{
+            color:#6b7280;
+            font-size:16px;
+            margin-bottom:40px;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:24px;
+        }
+
+        .card{
+            background:#ffffff;
+            border:1px solid #e5e7eb;
+            border-radius:18px;
+            padding:30px;
+            text-decoration:none;
+            color:#111827;
+            transition:0.25s;
+        }
+
+        .card:hover{
+            transform:translateY(-4px);
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .icon{
+            font-size:42px;
+            margin-bottom:15px;
+        }
+
+        .card h2{
+            margin-bottom:10px;
+            font-size:22px;
+        }
+
+        .card p{
+            color:#6b7280;
+            font-size:14px;
+            line-height:1.6;
+            min-height:70px;
+        }
+
+        .btn{
+            display:inline-block;
+            margin-top:20px;
+            background:#2563eb;
+            color:white;
+            padding:11px 18px;
+            border-radius:8px;
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .footer{
+            text-align:center;
+            margin-top:25px;
+            color:#6b7280;
+            font-size:13px;
+        }
+
+        @media(max-width:900px){
+
+            .cards{
+                grid-template-columns:1fr;
+            }
+
+            .hero{
+                padding:30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hero">
+
+        <h1>CampusConnect</h1>
+
+        <p>
+            Smart Campus Grievance Management System
+        </p>
+
+        <div class="cards">
+
+            <a href="/submit" class="card">
+
+                <div class="icon">📝</div>
+
+                <h2>Student Portal</h2>
+
+                <p>
+                    Submit a new complaint related to academics,
+                    examinations, hostel, infrastructure,
+                    library or other campus services.
+                </p>
+
+                <span class="btn">
+                    Submit Complaint
+                </span>
+
+            </a>
+
+            <a href="/track" class="card">
+
+                <div class="icon">🔍</div>
+
+                <h2>Track Complaint</h2>
+
+                <p>
+                    Track your complaint using the Complaint ID
+                    and check the latest priority and status.
+                </p>
+
+                <span class="btn">
+                    Track Status
+                </span>
+
+            </a>
+
+            <a href="/admin-login" class="card">
+
+                <div class="icon">🛡️</div>
+
+                <h2>Admin Portal</h2>
+
+                <p>
+                    Review complaints, assign priority,
+                    update status and manage grievance resolution.
+                </p>
+
+                <span class="btn">
+                    Admin Login
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        CampusConnect • Smart Campus Grievance Management System
+    </div>
+
+</div>
+
+</body>
+
+</html>

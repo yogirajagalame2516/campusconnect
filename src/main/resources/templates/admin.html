@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:Arial,sans-serif;
+            background:#eef2f7;
+            color:#1f2937;
+        }
+
+        .navbar{
+            background:#111827;
+            color:white;
+            padding:18px 36px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .brand h2{
+            margin:0;
+            font-size:22px;
+        }
+
+        .brand span{
+            color:#cbd5e1;
+            font-size:13px;
+        }
+
+        .nav-links a{
+            color:#111827;
+            background:white;
+            text-decoration:none;
+            padding:9px 14px;
+            border-radius:8px;
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .container{
+            width:98%;
+            max-width:1800px;
+            margin:30px auto;
+            padding:0 20px;
+        }
+
+        .page-title{
+            margin-bottom:22px;
+        }
+
+        .page-title h1{
+            font-size:30px;
+            margin-bottom:6px;
+            color:#1f2937;
+        }
+
+        .page-title p{
+            color:#6b7280;
+            font-size:15px;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+            margin-bottom:25px;
+        }
+
+        .stat-card{
+            background:white;
+            padding:22px 26px;
+            border-radius:14px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.06);
+            border-left:5px solid #2563eb;
+        }
+
+        .stat-card p{
+            color:#6b7280;
+            margin-bottom:8px;
+            font-size:14px;
+        }
+
+        .stat-card h2{
+            font-size:32px;
+            color:#111827;
+        }
+
+        .panel{
+            background:white;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.06);
+            overflow:visible;
+        }
+
+        .panel-header{
+            padding:20px;
+            border-bottom:1px solid #e5e7eb;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .panel-header h3{
+            font-size:19px;
+            color:#111827;
+        }
+
+        .note{
+            font-size:13px;
+            color:#6b7280;
+        }
+
+        .table-wrap{
+            width:100%;
+        }
+
+        table{
+            width:100%;
+            border-collapse:separate;
+            border-spacing:0;
+        }
+
+        th{
+            background:#f8fafc;
+            padding:14px 12px;
+            text-align:left;
+            font-size:12px;
+            font-weight:700;
+            color:#475569;
+            text-transform:uppercase;
+            border-bottom:1px solid #e5e7eb;
+            white-space:nowrap;
+        }
+
+        td{
+            padding:14px 12px;
+            border-bottom:1px solid #e5e7eb;
+            font-size:14px;
+            vertical-align:middle;
+            background:#ffffff;
+            color:#111827;
+        }
+
+        tr:hover td{
+            background:#f9fafb;
+        }
+
+        .id{
+            font-weight:700;
+            color:#2563eb;
+            white-space:nowrap;
+        }
+
+        .date{
+            white-space:nowrap;
+            color:#374151;
+        }
+
+        .student-name{
+            font-weight:600;
+            color:#111827;
+        }
+
+        small{
+            display:block;
+            margin-top:4px;
+            color:#6b7280;
+            font-size:12px;
+        }
+
+        .category-badge{
+            display:inline-block;
+            padding:6px 10px;
+            border-radius:999px;
+            background:#eef2ff;
+            color:#3730a3;
+            font-size:12px;
+            font-weight:700;
+            white-space:nowrap;
+        }
+
+        .complaint-text{
+            max-width:260px;
+            line-height:1.4;
+            color:#374151;
+        }
+
+        select,
+        textarea{
+            border:1px solid #d1d5db;
+            border-radius:10px;
+            background:#ffffff !important;
+            color:#111827;
+            font-family:Arial,sans-serif;
+            font-size:14px;
+        }
+
+        select{
+            height:38px;
+            padding:0 10px;
+            width:130px;
+        }
+
+        textarea{
+            width:210px;
+            min-height:64px;
+            padding:10px 12px;
+            resize:vertical;
+            box-shadow:none !important;
+            outline:none !important;
+        }
+
+        textarea:focus,
+        select:focus{
+            outline:none;
+            border-color:#2563eb !important;
+            box-shadow:0 0 0 3px rgba(37,99,235,0.12) !important;
+        }
+
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:10px 16px;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:700;
+            font-size:14px;
+        }
+
+        button:hover:not(:disabled){
+            background:#1d4ed8;
+        }
+
+        button:disabled{
+            background:#9ca3af;
+            cursor:not-allowed;
+        }
+
+        @media(max-width:900px){
+            .cards{
+                grid-template-columns:repeat(2,1fr);
+            }
+        }
+
+        @media(max-width:600px){
+            .cards{
+                grid-template-columns:1fr;
+            }
+
+            .panel-header{
+                align-items:flex-start;
+                flex-direction:column;
+                gap:6px;
+            }
+        }
+
+        .analytics-card{
+            background:white;
+            padding:16px 20px;
+            border-radius:14px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.06);
+            margin-bottom:25px;
+        }
+
+        .analytics-card h3{
+            margin-bottom:14px;
+            font-size:18px;
+        }
+
+        .chart-row{
+            margin-bottom:10px;
+        }
+
+        .chart-label{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:4px;
+            font-weight:600;
+            font-size:14px;
+        }
+
+        .chart-bar{
+            width:100%;
+            height:10px;
+            background:#e5e7eb;
+            border-radius:999px;
+            overflow:hidden;
+        }
+
+        .chart-fill{
+            height:100%;
+            border-radius:999px;
+        }
+
+                .pending-bar{
+                    background:#f59e0b;
+                }
+
+        .progress-bar{
+            background:#2563eb;
+        }
+
+        .resolved-bar{
+            background:#10b981;
+        }
+
+        .filter-form{
+            margin-top:15px;
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            align-items:center;
+        }
+
+        .filter-form input{
+            width:350px;
+            padding:12px;
+            border:1px solid #d1d5db;
+            border-radius:10px;
+            font-size:14px;
+        }
+
+        .filter-form select{
+            width:170px;
+            height:42px;
+        }
+
+        .clear-link{
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:700;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="brand">
+        <h2>CampusConnect Admin</h2>
+        <span>Complaint Management System</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="/admin-logout">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="page-title">
+        <h1>Admin Dashboard</h1>
+        <p>Review complaints, assign priority, update status and add admin notes.</p>
+
+        <form action="/admin" method="get" class="filter-form">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by Complaint ID, Name or Email"
+                th:value="${search}">
+
+            <select name="status">
+                <option value="">All Status</option>
+                <option value="Pending" th:selected="${selectedStatus == 'Pending'}">Pending</option>
+                <option value="In Progress" th:selected="${selectedStatus == 'In Progress'}">In Progress</option>
+                <option value="Resolved" th:selected="${selectedStatus == 'Resolved'}">Resolved</option>
+            </select>
+
+            <select name="category">
+                <option value="">All Categories</option>
+                <option value="Academic" th:selected="${selectedCategory == 'Academic'}">Academic</option>
+                <option value="Examination" th:selected="${selectedCategory == 'Examination'}">Examination</option>
+                <option value="Hostel" th:selected="${selectedCategory == 'Hostel'}">Hostel</option>
+                <option value="Fee & Scholarship" th:selected="${selectedCategory == 'Fee & Scholarship'}">Fee & Scholarship</option>
+                <option value="Infrastructure" th:selected="${selectedCategory == 'Infrastructure'}">Infrastructure</option>
+                <option value="Library" th:selected="${selectedCategory == 'Library'}">Library</option>
+                <option value="Other" th:selected="${selectedCategory == 'Other'}">Other</option>
+            </select>
+
+            <button type="submit">Apply</button>
+
+            <a href="/admin" class="clear-link">Clear</a>
+
+           
+        </form>
+    </div>
+
+    <div class="cards">
+            <div class="stat-card">
+                <p>Total Complaints</p>
+                <h2 th:text="${total}"></h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Pending</p>
+                <h2 th:text="${pending}"></h2>
+            </div>
+
+            <div class="stat-card">
+                <p>In Progress</p>
+                <h2 th:text="${inProgress}"></h2>
+            </div>
+
+            <div class="stat-card">
+                <p>Resolved</p>
+                <h2 th:text="${resolved}"></h2>
+            </div>
+        </div>
+
+        
+
+    <div class="panel">
+        <div class="panel-header">
+            <h3>Complaint Management</h3>
+            <span class="note">Update button activates only after changes.</span>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Student</th>
+                    <th>Category</th>
+                    <th>Complaint</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Admin Note</th>
+                    <th>Action</th>
+                </tr>
+
+                <tr th:each="complaint : ${complaints}">
+                    <td class="id">
+                        <a th:href="@{'/admin/complaint/' + ${complaint.complaintId}}"
+                        th:text="${complaint.complaintId}"
+                        style="color:#2563eb;text-decoration:none;font-weight:700;">
+                        </a>
+                    </td>
+
+                    <td class="date" th:text="${complaint.createdDate}"></td>
+
+                    <td>
+                        <span class="student-name" th:text="${complaint.name}"></span>
+                        <small th:text="${complaint.email}"></small>
+                    </td>
+
+                    <td>
+                        <span class="category-badge" th:text="${complaint.category}"></span>
+                    </td>
+
+                    <td>
+                        <div class="complaint-text" th:text="${complaint.message}"></div>
+                    </td>
+
+                    <td>
+                        <select name="priority"
+                                class="watch-change"
+                                th:form="'updateForm-' + ${complaint.complaintId}">
+                            <option value="High" th:selected="${complaint.priority == 'High'}">High</option>
+                            <option value="Medium" th:selected="${complaint.priority == 'Medium'}">Medium</option>
+                            <option value="Low" th:selected="${complaint.priority == 'Low'}">Low</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="status"
+                                class="watch-change"
+                                th:form="'updateForm-' + ${complaint.complaintId}">
+                            <option value="Pending" th:selected="${complaint.status == 'Pending'}">Pending</option>
+                            <option value="In Progress" th:selected="${complaint.status == 'In Progress'}">In Progress</option>
+                            <option value="Resolved" th:selected="${complaint.status == 'Resolved'}">Resolved</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <textarea
+                            name="adminNote"
+                            rows="3"
+                            class="watch-change"
+                            placeholder="Add admin note..."
+                            th:form="'updateForm-' + ${complaint.complaintId}"
+                            th:text="${complaint.adminNote != null && complaint.adminNote != '' ? complaint.adminNote : '-'}"></textarea>
+                    </td>
+
+                    <td>
+
+                        <div style="display:flex;align-items:center;gap:10px;">
+
+                            <form action="/update"
+                                method="post"
+                                th:id="'updateForm-' + ${complaint.complaintId}">
+
+                                <input type="hidden"
+                                    name="complaintId"
+                                    th:value="${complaint.complaintId}">
+
+                                <button type="submit" disabled>
+                                    Update
+                                </button>
+
+                            </form>
+
+                            <a th:href="@{'/admin/complaint/pdf/' + ${complaint.complaintId}}"
+                            title="Download PDF">
+
+                                <img src="/images/pdf.png"
+                                    alt="PDF"
+                                    width="32"
+                                    height="32
+                                    ">
+
+                            </a>
+
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll("tr").forEach(function(row) {
+        const button = row.querySelector("button");
+        const fields = row.querySelectorAll(".watch-change");
+
+        if(button){
+            fields.forEach(function(field) {
+                field.addEventListener("input", function() {
+                    button.disabled = false;
+                });
+
+                field.addEventListener("change", function() {
+                    button.disabled = false;
+                });
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

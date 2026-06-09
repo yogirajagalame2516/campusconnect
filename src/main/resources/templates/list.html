@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Complaint Records</title>
+
+
+<style>
+
+    body{
+        font-family:Arial,sans-serif;
+        background:#eef2f7;
+        margin:0;
+        padding:40px;
+        color:#1f2937;
+    }
+
+    .container{
+        width:98%;
+        max-width:1800px;
+        margin:auto;
+    }
+
+    .header{
+        background:white;
+        padding:24px;
+        border-radius:14px;
+        margin-bottom:24px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        box-shadow:0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    h1{
+        margin:0;
+        font-size:28px;
+    }
+
+    .subtitle{
+        margin-top:6px;
+        color:#6b7280;
+        font-size:14px;
+    }
+
+    .btn{
+        background:#2563eb;
+        color:white;
+        padding:12px 18px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:14px;
+        margin-left:8px;
+    }
+
+    .card{
+        background:white;
+        border-radius:14px;
+        overflow:hidden;
+        box-shadow:0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+    }
+
+    th{
+        background:#f8fafc;
+        text-align:left;
+        padding:16px;
+        font-size:13px;
+        color:#475569;
+        text-transform:uppercase;
+    }
+
+    td{
+        padding:16px;
+        border-top:1px solid #e5e7eb;
+        font-size:14px;
+        vertical-align:top;
+    }
+
+    .id{
+        font-weight:700;
+        color:#1d4ed8;
+    }
+
+    .id-cell{
+        min-width:160px;
+        white-space:nowrap;
+    }
+
+    .date-cell{
+        min-width:110px;
+        white-space:nowrap;
+    }
+
+    .name-cell{
+        min-width:160px;
+        white-space:nowrap;
+    }
+
+    .category-cell{
+        min-width:170px;
+        white-space:nowrap;
+    }
+
+    .status-cell{
+        min-width:130px;
+        white-space:nowrap;
+    }
+
+    .complaint-cell{
+        width:260px;
+        line-height:1.5;
+    }
+
+    .note-cell{
+        width:320px;
+    }
+    .tag{
+        padding:5px 10px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:600;
+        display:inline-block;
+        background:#e0ecff;
+        color:#1d4ed8;
+    }
+
+    .status{
+        padding:5px 10px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:600;
+        display:inline-block;
+        background:#fef3c7;
+        color:#92400e;
+    }
+    .note{
+        background:#f8fafc;
+        border:none;
+        padding:12px;
+        border-radius:6px;
+        color:#1f2937;
+        min-height:70px;
+        line-height:1.5;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<div class="header">
+
+    <div>
+        <h1>Complaint Records</h1>
+        <p class="subtitle">
+            View submitted complaints and current status
+        </p>
+    </div>
+
+    <div>
+        <a href="/" class="btn">Home</a>
+        <a href="/submit" class="btn">+ New Complaint</a>
+    </div>
+
+</div>
+
+<div class="card">
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Complaint</th>
+            <th>Admin Note</th>
+        </tr>
+
+        <tr th:each="complaint : ${complaints}">
+            <td class="id id-cell"
+                th:text="${complaint.complaintId}">
+            </td>
+
+            <td class="date-cell"
+                th:text="${complaint.createdDate}">
+            </td>
+
+            <td class="name-cell"
+                th:text="${complaint.name}">
+            </td>
+
+            <td class="category-cell">
+                <span class="tag"
+                    th:text="${complaint.category}">
+                </span>
+            </td>
+
+            <td class="status-cell">
+                <span class="status"
+                    th:text="${complaint.status}">
+                </span>
+            </td>
+
+            <td class="complaint-cell"
+                th:text="${complaint.message}">
+            </td>
+
+            <td class="note-cell">
+                <div class="note"
+                    th:text="${complaint.adminNote != null and !complaint.adminNote.isEmpty() ? complaint.adminNote : '-'}">
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
